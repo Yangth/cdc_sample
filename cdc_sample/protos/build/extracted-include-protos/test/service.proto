@@ -1,0 +1,31 @@
+/**
+ * @Author: philip
+ * @Description: 对外接口
+ * @File:  passenger.proto
+ * @Version: 1.0.0
+ * @Date: 2020/2/18 20:24
+ */
+
+syntax = "proto3";
+option optimize_for = SPEED;
+package fpidemic_prevention;
+
+
+
+import "passenger.proto";
+import "common.proto";
+import "report.proto";
+
+
+service EpidemicPrevention {
+  /*              旅客相关                   */
+  // 获取用户信息
+  rpc GetPassenger(GetPassengerReq) returns (GetPassengerRsp);
+  // 获取用户的隐私信息
+  rpc GetPassengerPrivacy (GetPassengerPrivacyReq) returns (GetPassengerPrivacyRsp);
+
+    /*              上报信息同步                   */
+    // 同步用户上报信息
+    rpc SyncReportData (SyncReportDataReq) returns (RspHead);
+
+}

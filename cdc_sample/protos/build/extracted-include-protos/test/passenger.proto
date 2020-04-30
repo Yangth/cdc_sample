@@ -1,0 +1,136 @@
+/**
+ * @Author: philip
+ * @Description: 乘客信息
+ * @File:  passenger.proto
+ * @Version: 1.0.0
+ * @Date: 2020/2/18 20:24
+ */
+syntax = "proto3";
+option optimize_for = SPEED;
+
+package fpidemic_prevention;
+import "common.proto";
+
+
+
+
+
+
+enum Order {
+  ORDER_START = 0;
+  // 顺序
+  ASC = 1;
+  // 逆序
+  DESC = 2;
+}
+
+enum IdCardType {
+  ID_TYPE_START = 0;
+  // 居民身份证
+  ID_CARD = 1;
+  // 港澳居民往来内地通行证
+  GAP = 2;
+  // 台湾居民来往大陆通行证
+  TAIWAN = 3;
+  // 护照
+  PASSPORT = 4;
+  // 临时身份证
+  TEMP = 5;
+  // 军官证
+  OFFICER = 6;
+  // 其他
+  OTHER_ID = 7;
+}
+
+/**
+ * 乘客
+ */
+message Passenger {
+  // 深i你 获取的personKey
+  string personKey = 1;
+  // 姓名
+  string name = 2;
+  // 身份证号
+  string idNo = 3;
+  // 目的区域
+  string destArea = 4;
+  // 目的具体地址
+  string destAddress = 5;
+  // 证件类型
+  IdCardType idType = 6;
+  // 性别
+  string sex = 7;
+}
+
+// 乘客的隐私信息
+message PassengerPrivacy {
+  // 深i你 获取的personKey
+  string personKey = 1;
+  // 姓名
+  string name = 2;
+  // 性别
+  string sex = 3;
+  // 国籍
+  string nationality = 4;
+  // 手机号
+  string phone = 5;
+  // 身份证号
+  string idNo = 6;
+  // 住址
+  string address = 7;
+  // 抵达时间
+  string arriveTime = 8;
+  // 目的地县市
+  string destArea = 9;
+  // 目的地详细地址
+  string destAddress = 10;
+  // 年龄
+  int32 age = 11;
+  // 生日
+  string birthday = 13;
+  string oid=14;
+  string id=15;
+  // 证件类型
+  IdCardType idType = 12;
+}
+
+
+/* -----------------------------------------------------*/
+/**
+* 描 述: 获取乘客信息
+*/
+/* -----------------------------------------------------*/
+message GetPassengerReq {
+  // 请求头
+  ReqHead head = 1;
+  // 获取查询的乘客personKey
+  repeated string personKey = 2;
+}
+message GetPassengerRsp {
+  // 请求头
+  RspHead head = 1;
+  // 乘客信息
+  map<string, Passenger> passengers = 2;
+}
+
+
+
+
+/* -----------------------------------------------------*/
+/**
+* 描 述: 获取乘客的隐私信息
+*/
+/* -----------------------------------------------------*/
+message GetPassengerPrivacyReq {
+  // 请求头
+  ReqHead head = 1;
+  // person_key
+  string personKey = 2;
+}
+message GetPassengerPrivacyRsp {
+  // 响应头
+  RspHead head = 1;
+  // 用户的隐私信息
+  PassengerPrivacy info = 2;
+}
+

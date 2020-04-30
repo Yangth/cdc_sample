@@ -1,0 +1,67 @@
+/**
+ * @Author: grepsun
+ * @Description: 公共元素
+ * @File:  common.proto
+ * @Version: 1.0.0
+ * @Date: 2020/2/18 20:24
+ */
+
+syntax = "proto3";
+
+option optimize_for = SPEED;
+
+package fpidemic_prevention;
+
+message Role {
+    // isolation或transfer
+    string resourceName = 1;
+    // 隔离点id或者transfer组织的id
+    string resourceId = 2;
+    // 角色
+    string role = 3;
+}
+
+// 请求的包头
+message ReqHead {
+    // 当前请求用户id
+    string staffId = 1;
+    // 客户端协议版本
+    string version = 4;
+    // 请求时间
+    string time = 5;
+    repeated Role roles = 6;
+}
+
+// 应答的包头
+message RspHead {
+    // 枚举类型字段，如果不设置，默认是值为0的字段，这在有些场景下会有问题
+    // 例如该字段必填，如果请求方没有填写，默认填写第一个字段，服务的此时无法判断，
+    // 返回的状态码
+    enum ErrorCode {
+        // 基本错误
+        ERROR_START = 0;
+        //  成功
+        OK = 1;
+        //  参数错误
+        PARAMS_ERROR = 2;
+        //  服务内部错误
+        SERVICE_ERROR = 3;
+        // 权限错误
+        NO_PERMISSION = 4;
+        // 操作失败
+        OPERATION_FAIL = 5;
+        // SECRET信息错误
+        SECRET_WRONG = 6;
+        // APPID 错误
+        APPID_WRONG = 7;
+        // 记录不存在
+        RECORD_NOT_EXIST = 8;
+        // 记录已存在
+        RECORD_ALREADY_EXIST = 9;
+    }
+
+    //响应码
+    ErrorCode code = 1;
+    // 相关信息
+    string msg = 2;
+}

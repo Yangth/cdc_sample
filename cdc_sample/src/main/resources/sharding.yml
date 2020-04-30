@@ -1,0 +1,15 @@
+dataSources:
+  db_passenger_report: !!com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/db_passenger_report?useSSL=false&characterEncoding=utf8
+    username: root
+    password: 123456
+
+shardingRule:
+  tables:
+    t_passenger_report:
+      actualDataNodes: db_passenger_report.t_passenger_report_${0..99}
+      tableStrategy:
+        standard: #用于单分片键的标准分片场景
+          shardingColumn: identity
+          preciseAlgorithmClassName: com.bottle.sample.common.algorithm.PassengerReportShardingAlgorithm

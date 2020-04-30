@@ -1,0 +1,308 @@
+/**
+ * @Author: grepsun
+ * @Description: 上报信息
+ * @File:  report.proto
+ * @Version: 1.0.0
+ * @Date: 2020/2/18 20:24
+ */
+syntax = "proto3";
+option optimize_for = SPEED;
+
+package fpidemic_prevention;
+
+import "common.proto";
+
+/**
+ * 上报信息
+ */
+message ReportInfo {
+  // 数据库id 非空
+  string id = 1;
+  // 应用标志 可空
+  string appId = 2;
+  // 微信openid 非空
+  uint64 uid = 3;
+  // 姓名 非空
+  string username = 4;
+  // 电话 非空
+  string phone = 5;
+  // 性别 可空
+  string gender = 6;
+  // 出生日期 可空
+  string birthday = 7;
+  // 证件类型 非空
+  int32 identityType = 8;
+  // 证件号码 非空
+  string identity = 9;
+  // 城市 非空
+  string city = 10;
+  // 城市行政区划代码 非空
+  string cityCode = 11;
+  // 区--中文地址 非空
+  string area = 12;
+  // 县区行政区划代码	非空
+  string areacode = 13;
+  // 街道/村居名称	非空
+  string street = 14;
+  // 街道/村居行政区划代码		非空
+  string streetCode = 15;
+  // 社区名称	可空
+  string community = 16;
+  // 社区行政区划代码	可空
+  string communityCode = 17;
+  // 详细地址	非空
+  string address = 18;
+  // 症状描述	非空
+  string symptom = 19;
+  // 居住属性	非空
+  int32 livingType = 20;
+  // 提交时间	非空
+  string createTime = 21;
+  // 是否需要咨询或帮助 非空
+  int32 ifHelp = 22;
+  // 采集类型		非空
+  int32 collectorType = 23;
+  // 体温		可空
+  int32 temperature = 24;
+  // 是否医院检查		非空
+  int32 hospitalCheck = 25;
+  // 症状自行描述	可空
+  string symptomDscr = 26;
+  // 人员类型：1 外地来深  2 外地返深 3 留深人员	可空
+  int32 personType = 27;
+  // 是否居家隔离 0 -否 1 -是		非空
+  int32 quarantineCheck = 28;
+  // 社会信用代码	可空
+  string socialCreditId = 29;
+  // 单位名称	可空
+  string company = 30;
+  // 目前所在城市		非空
+  string currentLocation = 31;
+  // 目前所在城市行政区划代码		非空
+  string currentLocationCode = 32;
+  // 当前版本号		非空
+  string version = 33;
+  // 数据来源	可空
+  int32 dataFrom = 34;
+  // 楼栋房屋编码		可空
+  string code = 35;
+  // 小区名称	可空
+  string village = 36;
+  // 是否深圳居住 0 -否 1 -是	非空
+  int32 ifLivingSz = 37;
+  // 是否深圳工作 0 -否 1 -是	非空
+  int32 ifWorkingSz = 38;
+  // 医院检查结果	可空
+  int32 hospitalCheckResult = 39;
+  // 是否入境人员	可空
+  int32 ifEnter = 40;
+  // personKey (非空)
+  string personKey = 46;
+
+  repeated Address multiAddress = 41;
+  repeated CloseUser closeUsers = 42;
+  repeated Journey journeys = 43;
+  repeated Backtrack backtracks = 44;
+  SupplementInfo supplementInfo = 45;
+}
+
+/**
+ * 地址信息
+ */
+message Address {
+  // 键ID	非空
+  string id = 1;
+  // 上报信息表id		非空
+  string reportedId = 2;
+  // 城市	可空
+  string city = 3;
+  // 城市行政区划代码		可空
+  string cityCode = 4;
+  // 区--中文地址		可空
+  string area = 5;
+  // 县区行政区划代码	可空
+  string areaCode = 6;
+  // 街道/村居名称 可空
+  string street = 7;
+  // 街道/村居行政区划代码		可空
+  string streetCode = 8;
+  // 社区名称	可空
+  string community = 9;
+  // 社区行政区划代码		可空
+  string communityCode = 10;
+  // 详细地址 可空
+  string address = 11;
+  // 地址类型 : 0 -居住地址 1 -工作地址		可空
+  int32 addressType = 12;
+  // 创建时间	非空
+  string createTime = 13;
+  //更新时间	可空
+  string updateTime = 14;
+  // 居住地址方式：1.居家住宅2.租住3.投靠借住4.酒店旅店5.其他 非空
+  int32 livingProperty = 15;
+  // 居住属性 -其它 手动填写		可空
+  string livingRemark = 16;
+  // 单位名称	可空
+  string company = 17;
+  // 社会信用代码		可空
+  string socialCreditId = 18;
+  // 政法委地址返回的楼栋门牌编码 可空
+  string code = 19;
+  // 政法委地址返回的小区地址	可空
+  string village = 20;
+}
+
+
+/**
+ * 接触人员信息
+ */
+message CloseUser {
+  // 主键ID		非空
+  string id = 1;
+  // 上报信息表id		非空
+  string reportedId = 2;
+  // 微信openid		非空
+  uint64 uid = 3;
+  // 是否与确诊或疑似病例有密切接触	非空
+  int32 closeContact = 4;
+  // 确诊或疑似病例姓名 可空
+  string closeContactName = 5;
+  // 确诊或疑似病例身份证号 可空
+  string closeContactIdentity = 6;
+  // 与确诊或疑似病例关系		可空
+  string closeContactRelationship = 7;
+  // 接触时间	可空
+  string closeContactTime = 8;
+  // 与确诊或疑似病例有密切接触情况描述	可空
+  string detailsCloseContact = 9;
+  // 同步时间	可空
+  string syncTime = 10;
+}
+
+/**
+ * 行程信息
+ */
+message Journey {
+  // id		非空
+  string id = 1;
+  // 上报信息表ID		非空
+  string reportedId = 2;
+  // 微信openid		非空
+  uint64 uid = 3;
+  // 出发地		可空
+  string departure = 4;
+  // 出发地行政区划 可空
+  string departureCityCode = 5;
+  // 出发日期	可空
+  string departureDay = 6;
+  // 目的地	可空
+  string arrivedCity = 7;
+  // 目的地行政区划	可空
+  string arrivedCityCode = 8;
+  // 交通方式	非空
+  string byVehicle = 9;
+  // 抵达日期	非空
+  string arrivedDay = 10;
+  // 座位号，航班号	可空
+  string seat = 11;
+  // 目的地停留天数	可空
+  string arrivedDays = 12;
+  // 居住地		非空
+  string liveIn = 13;
+  // 同步时间	可空
+  string syncTime = 14;
+  // 抵达城市	可空
+  string endCity = 15;
+  // 出发城市 可空
+  string startCity = 16;
+}
+
+/**
+ * 返程信息
+ */
+message Backtrack {
+  // id	非空
+  uint64 id = 1;
+  // 上报信息表ID		非空
+  string reportedId = 2;
+  // 微信openid		非空
+  uint64 uid = 3;
+  // 计划返深日期	非空
+  string departureDay = 4;
+  // 抵深日期	非空
+  string arrivedDay = 5;
+  // 交通方式		非空
+  string byVehicle = 6;
+  // 座位号，航班号		可空
+  string seat = 7;
+  // 返程出发地		非空
+  string backDeparture = 8;
+  // 返程出发地行政区划		非空
+  string backDepartureCityCode = 9;
+  // 司乘角色	可空
+  int32 personRole = 10;
+  // 车辆类型	可空
+  string vehicleType = 11;
+  // 同步时间 可空
+  string syncTime = 12;
+  // 出发城市	可空
+  string startCity = 13;
+  // 抵达城市	可空
+  string endCity = 14;
+}
+
+/**
+ * 人员补充信息
+ */
+message SupplementInfo {
+  // 主键		非空
+  string id = 1;
+  // 微信openid或登录会话里给的用户标志	非空
+  uint64 uid = 2;
+  // 人员标识id	非空
+  string personKey = 3;
+  // 申报记录主键		非空
+  string reportedId = 4;
+  // 入境口岸		可空
+  int32 checkpoint = 5;
+  // 入境城市	可空
+  string immigrationCity = 6;
+  // 是否留学生		非空
+  int32 abroadStudent = 7;
+  // 居住城市	非空
+  string destinationCity = 8;
+  // 居住城市行政区划代码		非空
+  string destinationCityCode = 9;
+  // 县区名称(城市选深圳才有)	可空
+  string area = 10;
+  // 县区行政区划代码(城市选深圳才有)		可空
+  string areaCode = 11;
+  // 街道/村居名称(城市选深圳才有)	可空
+  string street = 12;
+  // 街道/村居名称代码(城市选深圳才有)	可空
+  string streetCode = 13;
+  // 社区名称(城市选深圳才有)	可空
+  string community = 14;
+  // 社区行政区划代码(城市选深圳才有)		可空
+  string communityCode = 15;
+  // 详细地址	非空
+  string address = 16;
+  // 楼栋房屋编码(城市选深圳才有)	可空
+  string code = 17;
+  // 创建时间	非空
+  string createTime = 18;
+  // 国籍	可空
+  string nationality = 19;
+  // 国籍编码	可空
+  string nationalityCode = 20;
+}
+
+/*************************
+        同步用户上报信息
+*************************/
+message SyncReportDataReq {
+  // 请求头
+  ReqHead head = 1;
+  // 上报信息
+  ReportInfo reportInfo = 2;
+}

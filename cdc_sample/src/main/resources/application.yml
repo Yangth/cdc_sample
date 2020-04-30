@@ -1,0 +1,72 @@
+eureka:
+  instance:
+    leaseRenewalIntervalInSeconds: 1
+    leaseExpirationDurationInSeconds: 2
+  client:
+    serviceUrl:
+      defaultZone: http://134.175.10.203:8100/eureka/
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  #config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: mybatis/*Mapper.xml
+  typeAliasesPackage: com.bottle.sample.entity
+
+mapper:
+  mappers: com.bottle.sample.common.util.MyMapper
+  not-empty: false
+  identity: MYSQL
+
+pagehelper:
+  helperDialect: mysql
+  reasonable: true
+  supportMethodsArguments: true
+  params: count=countSql
+
+server:
+  port: 8812
+
+grpc:
+  client:
+    api:
+      host: 118.89.31.150
+      port: 8082
+      staffId: 1245684151317409792
+      enableKeepAlive: true
+      keepAliveWithoutCalls: true
+      negotiationType: plaintext
+
+spring:
+  application:
+    name: cdc_sample
+  main:
+    allow-bean-definition-overriding: true
+  jackson:
+    time-zone: GMT+8
+    date-format: yyyy-MM-dd HH:mm:ss
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    type: com.zaxxer.hikari.HikariDataSource
+    username: root
+    password:  123456
+    jdbc-url: jdbc:mysql://localhost:3306/db_fpidemic_prevention?useSSL=false&characterEncoding=utf8
+    hikari:
+      # 是否自动提交
+      auto-commit: true
+      # 如果在没有连接可用的情况下超过此时间，则将抛出SQLException
+      connection-timeout: 30000
+      # 控制允许连接在池中空闲的最长时间
+      idle-timeout: 600000
+      # 控制池中连接的最长生命周期。使用中的连接永远不会退役，只有当它关闭时才会被删除
+      max-lifetime: 1800000
+      # 如果您的驱动程序支持JDBC4，强烈建议不要设置此属性
+      # connection-test-query:
+      # 控制HikariCP尝试在池中维护的最小空闲连接数。建议不要设置此值，而是允许HikariCP充当固定大小的连接池。 默认值：与maximumPoolSize相同
+      # minimum-idle:
+      # 此属性控制允许池到达的最大大小，包括空闲和正在使用的连接。
+      maximum-pool-size: 10
+
+AESECBkey:
+  k1: LNFAPQrcPYpuipj2
+  k2: pisnyMyZYXuCNcRd
