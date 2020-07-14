@@ -40,8 +40,8 @@ dependencies {
     compile('org.springframework.cloud:spring-cloud-starter-netflix-eureka-client')
     compile 'mysql:mysql-connector-java:5.1.44'
     compile 'com.github.pagehelper:pagehelper-spring-boot-starter:1.2.3'
-    compile 'tk.mybatis:mapper-spring-boot-starter:1.1.5'
-    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.1.1'
+    compile group: 'tk.mybatis', name: 'mapper-spring-boot-starter', version: '2.1.5'
+//    compile 'org.mybatis.spring.boot:mybatis-spring-boot-starter:1.1.1'
     compile 'com.zaxxer:HikariCP:3.2.0'
     compile 'org.projectlombok:lombok:1.18.12'
     annotationProcessor 'org.projectlombok:lombok'
@@ -76,6 +76,37 @@ dependencyManagement {
 repositories {
     maven { url 'https://maven.aliyun.com/repository/public/' }
     maven { url 'https://maven.aliyun.com/repository/gradle-plugin' }
+}
+
+// 将依赖包复制到lib目录
+task copyJar(type: Copy) {
+    // 清除现有的lib目录
+    delete "$buildDir\\libs\\lib"
+    from configurations.runtime
+    from configurations.compileClasspath
+    into "$buildDir\\libs\\lib"
+}
+
+// 拷贝配置文件
+task copyConfigFile(type: Copy) {
+    // 清除现有的配置目录
+    delete "$buildDir\\libs\\config"
+    from('src/main/resources')
+    into 'build/libs/config'
+}
+
+bootJar {
+    // 排除所有的jar
+    excludes = ["*.jar"]
+    // lib目录的清除和复制任务
+    dependsOn copyJar
+    // 配置目录的清除和复制任务
+    dependsOn copyConfigFile
+    // 指定依赖包的路径，运行时不再需要指定 java.ext.dir 或 loader.path 参数。
+    manifest {
+        attributes "Manifest-Version": 1.0,
+                'Class-Path': configurations.runtime.files.collect { "lib/$it.name" }.join(' ')
+    }
 }
 
 install {
